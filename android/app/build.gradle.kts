@@ -19,6 +19,22 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    // Temporary: Disable R8 to troubleshoot the build issues
+    buildTypes {
+        release {
+            // Disable R8 for now
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+    }
+
+    dependencies {
+        // Add missing annotation dependencies
+        implementation("com.google.errorprone:error_prone_annotations:2.17.0")
+        implementation("javax.annotation:javax.annotation-api:1.3.2")
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.blacksun_2fa"
@@ -28,14 +44,6 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-    }
-
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
-        }
     }
 }
 
